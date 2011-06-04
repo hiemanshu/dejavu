@@ -10,7 +10,7 @@ dump=simplejson.dumps
 
 @get('/')
 def introduce():
-    return simplejson.dumps({"servers": dejavu.servers, "version": dejavu.version})
+    return dump({"servers": dejavu.servers, "version": dejavu.version})
 
 @get('/server')
 def addserver():
@@ -19,4 +19,4 @@ def addserver():
 
     return dump({'result': result})
 
-run(host='localhost', port=2012)
+run(host='localhost', port=2012, reloader=True)
