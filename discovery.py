@@ -32,4 +32,3 @@ def discover(ip, port):
 
     return ipR
 
-print discover('192.168.2.0/24', '80')
