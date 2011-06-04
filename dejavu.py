@@ -1,10 +1,13 @@
-import json
+import simplejson
 import subprocess
 import string
 import sys
 
+load=simplejson.loads
+dump=simplejson.dumps
+
 version = '0.1-alpha'
-servers = {}
+servers = []
 
 def discover(ip, port):
     """Discover ips with the given port open with for the given ip range
@@ -32,3 +35,15 @@ def discover(ip, port):
 
     return ipR
 
+def addserver(server):
+    try:
+        myip       = server['yourip'] # client's ip as seen by the server
+        serverhost = server['host']
+        serverport = server['port']
+    except:
+        raise ValueError('Invalid data.')
+
+    server = {'myip' : myip, 'host' : serverhost, 'port' : serverport }
+    servers.append(server)
+
+    return True

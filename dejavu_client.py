@@ -1,14 +1,22 @@
-from bottle import route, get, post, run
+import bottle
+from bottle import route, get, request, post, run
 import dejavu
-import json
+import simplejson
+
+bottle.debug(True)
+
+load=simplejson.loads
+dump=simplejson.dumps
 
 @get('/')
 def introduce():
-    print json.dump({"servers": dejavu.servers, "version": dejavu.version})
+    return simplejson.dumps({"servers": dejavu.servers, "version": dejavu.version})
 
-@post('/server')
+@get('/server')
 def addserver():
-    print request.body
-    dejavu.servers.append(request.body)
+    serverinfo = request.GET.get('data')
+    result = dejavu.addserver(load(serverinfo))
+
+    return dump({'result': result})
 
 run(host='localhost', port=2012)
